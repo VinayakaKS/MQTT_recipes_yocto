@@ -1,0 +1,15 @@
+Index: 1.0-r0/LED.py
+===================================================================
+--- 1.0-r0.orig/LED.py
++++ 1.0-r0/LED.py
+@@ -14,8 +14,8 @@ state=str(sys.argv[1])
+ state=state.lower()
+ 
+ if state == "on":
+-    GPIO.output(pin,False)
+-elif state == "off":
+     GPIO.output(pin,True)
++elif state == "off":
++    GPIO.output(pin,False)
+ 
+ 

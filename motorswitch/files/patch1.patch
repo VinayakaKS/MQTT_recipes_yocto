@@ -1,0 +1,47 @@
+Index: 1.0-r0/motorswitch.c
+===================================================================
+--- 1.0-r0.orig/motorswitch.c
++++ 1.0-r0/motorswitch.c
+@@ -3,6 +3,7 @@
+ #include <string.h>
+ #include <mosquitto.h>
+ 
++//Bash scrips to run the python script
+ #define MOTORON "\
+ #/bin/bash \n \
+ python3 motor.py ON \n \
+@@ -24,28 +25,27 @@ void on_connect(struct mosquitto *mosq,
+ 
+ void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_message *msg) {
+ 	
+-	int message=0;
+-	message=atoi(msg->payload);
+ 	char* arr;
+ 	arr = (char*)msg->payload;
+-	
+-	printf("Motor switching: %s\n", arr);
++        //Switching logic based on the message	
++	printf("Motor switching %s\n", arr);
+ 	if(strcmp("on", arr) == 0){
+ 		system(MOTORON);
+ 	}
+ 
+ 	if(strcmp("off", arr) == 0){
+-		system(MOTORON);
++		system(MOTOROFF);
+ 	}
+ 
+ }
+ 
+ int main() {
+ 	int rc, id=12;
++	//Getting the IP address of network
+ 	char ipv4[50];
+-    	printf("Provide the IP address(ipv4) of the client: ");
++    	printf("Provide the IP address(ipv4): ");
+     	scanf("%[^\n]%*c", ipv4);
+-	printf("Address is %s",ipv4);
++	printf("Address is %s\n",ipv4);
+ 	struct mosquitto *mosq;
+ 
+ 	mosquitto_lib_init();
